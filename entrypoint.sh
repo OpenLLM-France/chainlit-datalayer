@@ -9,5 +9,6 @@ npx prisma migrate deploy
 echo "Starting Prisma Studio..."
 npx prisma studio &
 
+
 # Keep the container running
 wait
