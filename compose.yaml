@@ -1,4 +1,17 @@
 services:
+  data-layer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${PRISMA_STUDIO_PORT:-5555}:5555 # port for prisma studio
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-root}:${POSTGRES_PASSWORD:-root}@postgres:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-postgres}
+    depends_on:
+      - postgres
+      - localstack
+      # - azurite
+
   postgres:
     image: postgres:16
     volumes:
@@ -14,11 +27,12 @@ services:
     environment:
       SERVICES: s3
     ports:
-      - 4566:4566
+      - ${LOCALSTACK_PORT:-4566}:4566
     volumes:
       - ./localstack-script.sh:/etc/localstack/init/ready.d/script.sh
       - "/var/run/docker.sock:/var/run/docker.sock"
-  # Uncomment below to simulate Azure Blob Storage (don't forget to run the init_azure_storage.py to create the container)
+
+  # # Uncomment below to simulate Azure Blob Storage (don't forget to run the init_azure_storage.py to create the container)
   # azurite:
   #   image: mcr.microsoft.com/azure-storage/azurite
   #   ports:

@@ -1,0 +1,13 @@
+[project]
+name = "chainlit-datalayer"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "aiohttp>=3.12.11",
+    "asyncpg>=0.30.0",
+    "azure-storage-blob>=12.25.1",
+    "boto3>=1.38.32",
+    "google-cloud-storage>=3.1.0",
+]
